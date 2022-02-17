@@ -9,9 +9,8 @@ package dao;
  *
  * @author Admin
  */
-import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.sql.DataSource;
@@ -31,10 +30,13 @@ public class AccountDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 if (rs.getString(2).equalsIgnoreCase(email)) {
+                       String sql2 = "UPDATE SWP391.Account SET Account_Status_idAccount_Status = \"1\" WHERE email LIKE ?";
+                       PreparedStatement pr = con.prepareStatement(sql2);
+                       pr.setString(1, rs.getString(2));
+                       pr.executeUpdate();
                        return true;
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
