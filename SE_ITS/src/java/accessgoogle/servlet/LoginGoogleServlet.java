@@ -59,8 +59,8 @@ public class LoginGoogleServlet extends HttpServlet {
 //                UserDAO dao = new UserDAO();
                 AccountDAO dao = new AccountDAO();
                 String email = gPojo.getEmail();
-                boolean check = dao.checkLogin(email);
-                if (check == false) {
+                String check = dao.checkLogin(email);
+                if (check == "Login Fail") {
                     email = "You don't have permisstion";
                 }
 //                UserDTO user = dao.checkLoginGoogle(userID);

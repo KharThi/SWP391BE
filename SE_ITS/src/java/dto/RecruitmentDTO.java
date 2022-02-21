@@ -18,19 +18,17 @@ public class RecruitmentDTO {
     float salary;
     String description;
     int companyId;
-    int recruitmentCategoryId;
 
     public RecruitmentDTO() {
     }
 
-    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId, int recruitmentCategoryId) {
+    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.salary = salary;
         this.description = description;
         this.companyId = companyId;
-        this.recruitmentCategoryId = recruitmentCategoryId;
     }
 
     public int getId() {
@@ -79,15 +77,6 @@ public class RecruitmentDTO {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
-    }
-
-    public int getRecruitmentCategoryId() {
-        return recruitmentCategoryId;
-    }
-
-    public void setRecruitmentCategoryId(int recruitmentCategoryId) {
-        this.recruitmentCategoryId = recruitmentCategoryId;
-    }
-    
+    }    
     
 }

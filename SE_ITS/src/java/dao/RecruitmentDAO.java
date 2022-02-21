@@ -32,7 +32,6 @@ public class RecruitmentDAO {
         float salary = 0;
         String description = null;
         int companyId = 0;
-        int recruitmentCategoryId = 0;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
@@ -48,8 +47,7 @@ public class RecruitmentDAO {
                 salary = rs.getFloat("salary");
                 description = rs.getString("description");
                 companyId = rs.getInt("Company_id");
-                recruitmentCategoryId = rs.getInt("Recruitment_Category_id");
-                RecruitmentDTO dto = new RecruitmentDTO(id, startDate, endDate, salary, description, companyId, recruitmentCategoryId);
+                RecruitmentDTO dto = new RecruitmentDTO(id, startDate, endDate, salary, description, companyId);
                 listRecruitment.add(dto);
             }
         } catch (Exception e) {
@@ -65,7 +63,7 @@ public class RecruitmentDAO {
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "INSERT INTO `SWP391`.`Recruitment` (`startDate`, `endDate`, `salary`, `description`, `Company_id`, `Recruitment_Category_id`) VALUES (?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO `SWP391`.`Recruitment` (`startDate`, `endDate`, `salary`, `description`, `Company_id`) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date parsed1 = format.parse(recruitment.getEndDate());
@@ -78,7 +76,6 @@ public class RecruitmentDAO {
             pr.setFloat(3, recruitment.getSalary());
             pr.setString(4, recruitment.getDescription());
             pr.setInt(5, recruitment.getCompanyId());
-            pr.setInt(6, recruitment.getRecruitmentCategoryId());
 
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
@@ -94,7 +91,7 @@ public class RecruitmentDAO {
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "UPDATE `SWP391`.`Recruitment` SET `startDate` = ?, `endDate` = ?, `salary` = ?, `description` = ?, `Company_id` = ?, `Recruitment_Category_id` = ? WHERE (`idRecruitment` = ?);";
+            String sql = "UPDATE `SWP391`.`Recruitment` SET `startDate` = ?, `endDate` = ?, `salary` = ?, `description` = ?, `Company_id` = ? WHERE (`idRecruitment` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date parsed1 = format.parse(recruitment.getEndDate());
@@ -106,8 +103,7 @@ public class RecruitmentDAO {
             pr.setFloat(3, recruitment.getSalary());
             pr.setString(4, recruitment.getDescription());
             pr.setInt(5, recruitment.getCompanyId());
-            pr.setInt(6, recruitment.getRecruitmentCategoryId());
-            pr.setInt(7, recruitment.getId());
+            pr.setInt(6, recruitment.getId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,16 +5,9 @@
  */
 package controller;
 
-import dao.RecruitmentCategoryDAO;
-import dao.NewsDAO;
-import dto.RecruitmentCategoryDTO;
-import dto.NewsDTO;
+import dao.RecruitmentDAO;
+import dto.RecruitmentDTO;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,13 +34,13 @@ public class testController extends HttpServlet {
 //            LocalDateTime myDateObj = LocalDateTime.now();
 //            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            String formattedDate = myDateObj.format(myFormatObj);   
-            RecruitmentCategoryDAO dao = new RecruitmentCategoryDAO();
-            RecruitmentCategoryDTO dto = new RecruitmentCategoryDTO(1, "TTTTTTTTTT");
-            boolean check = dao.deleteRecruitmentCategory(2);
+            RecruitmentDAO dao = new RecruitmentDAO();
+            RecruitmentDTO dto = new RecruitmentDTO(5, "2022-07-07", "2022-08-08", 2999, "Test again and again", 5);
+            boolean check = dao.updateRecruitment(dto);
             session.setAttribute("id", check);
-//            RecruitmentCategoryDTO dto2 = dao.getListRecruitmentCategory().get(dao.getListRecruitmentCategory().size()-1);
-//            session.setAttribute("id", dto2.getName());
-            
+//            RecruitmentDTO dto2 = dao.getListRecruitment().get(dao.getListRecruitment().size()-1);
+//            session.setAttribute("id", dto2.getDescription());
+//            
             url = "test.jsp";
 
         } catch (Exception e) {

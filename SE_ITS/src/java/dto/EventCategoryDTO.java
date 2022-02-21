@@ -12,15 +12,14 @@ package dto;
 public class EventCategoryDTO {
     int id;
     String nsme;
-    int eventsId;
 
     public EventCategoryDTO() {
     }
 
-    public EventCategoryDTO(int id, String nsme, int eventsId) {
+    public EventCategoryDTO(int id, String nsme ) {
         this.id = id;
         this.nsme = nsme;
-        this.eventsId = eventsId;
+
     }
 
     public int getId() {
@@ -37,14 +36,6 @@ public class EventCategoryDTO {
 
     public void setNsme(String nsme) {
         this.nsme = nsme;
-    }
-
-    public int getEventsId() {
-        return eventsId;
-    }
-
-    public void setEventsId(int eventsId) {
-        this.eventsId = eventsId;
     }
     
 }

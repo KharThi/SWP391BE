@@ -5,7 +5,7 @@
  */
 package dao;
 
-import dto.EventCategoryDTO;
+import dto.RecruitmentRecruitmentCategoryDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,41 +20,44 @@ import javax.sql.DataSource;
  *
  * @author Admin
  */
-public class EventCategoryDAO {
-    public List<EventCategoryDTO> getListEventCategory() {
-        List<EventCategoryDTO> listEventCategory = new ArrayList<>();
+public class RecruitmentRecruitmentCategoryDAO {
+    public List<RecruitmentRecruitmentCategoryDTO> getListRecruitmentRecruitmentCategory() {
+        List<RecruitmentRecruitmentCategoryDTO> listRecruitmentRecruitmentCategory = new ArrayList<>();
         int id = 0;
-        String name = null;
+        int recruitmentId = 0;
+        int recruitmentCategoryId = 0;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "SELECT * FROM SWP391.Event_Category;";
+            String sql = "SELECT * FROM SWP391.Recruitment_has_Recruitment_Category;";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("idEvent_Category");
-                name = rs.getString("name");
-                EventCategoryDTO dto = new EventCategoryDTO(id, name);
-                listEventCategory.add(dto);
+                id = rs.getInt("id");
+                recruitmentId = rs.getInt("Recruitment_id");
+                recruitmentCategoryId = rs.getInt("Recruitment_Category_id");               
+                RecruitmentRecruitmentCategoryDTO dto = new RecruitmentRecruitmentCategoryDTO(id, recruitmentId, recruitmentCategoryId);
+                listRecruitmentRecruitmentCategory.add(dto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listEventCategory;
+        return listRecruitmentRecruitmentCategory;
     }
 
-    public boolean createtEventCategory(EventCategoryDTO eventCategory) {
+    public boolean createtRecruitmentRecruitmentCategory(RecruitmentRecruitmentCategoryDTO recruitmentRecruitmentCategory) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "INSERT INTO SWP391.Event_Category (`name`) VALUES (?);";
+            String sql = "INSERT INTO `SWP391`.`Recruitment_has_Recruitment_Category` (`Recruitment_id`, `Recruitment_Category_id`) VALUES (?, ?);";
             PreparedStatement pr = con.prepareStatement(sql);
-            pr.setString(1, eventCategory.getNsme());
+            pr.setInt(1, recruitmentRecruitmentCategory.getRecruitmentId());
+            pr.setInt(2, recruitmentRecruitmentCategory.getRecruitmentCategoryId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,17 +65,18 @@ public class EventCategoryDAO {
         return check;
     }
 
-    public boolean updateEventCategory(EventCategoryDTO eventCategory) {
+    public boolean updateRecruitmentRecruitmentCategory(RecruitmentRecruitmentCategoryDTO recruitmentRecruitmentCategory) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "UPDATE SWP391.Event_Category SET `name` = ? WHERE (`idEvent_Category` = ?);";
+            String sql = "UPDATE `SWP391`.`Recruitment_has_Recruitment_Category` SET `Recruitment_id` = ?, `Recruitment_Category_id` = ? WHERE (`id` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
-            pr.setString(1, eventCategory.getNsme());
-            pr.setInt(2, eventCategory.getId());
+            pr.setInt(1, recruitmentRecruitmentCategory.getRecruitmentId());
+            pr.setInt(2, recruitmentRecruitmentCategory.getRecruitmentCategoryId());
+            pr.setInt(3, recruitmentRecruitmentCategory.getId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,14 +84,14 @@ public class EventCategoryDAO {
         return check;
     }
 
-    public boolean deleteEventCategory(int id) {
+    public boolean deleteRecruitmentRecruitmentCategory(int id) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "DELETE FROM SWP391.Event_Category WHERE (`idEvent_Category` = ?);";
+            String sql = "DELETE FROM `SWP391`.`Recruitment_has_Recruitment_Category` WHERE (`id` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setInt(1, id);
             check = pr.executeUpdate() > 0;
@@ -98,4 +102,5 @@ public class EventCategoryDAO {
         }
         return check;
     }
+    
 }

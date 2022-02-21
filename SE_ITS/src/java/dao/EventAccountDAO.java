@@ -5,7 +5,7 @@
  */
 package dao;
 
-import dto.EventCategoryDTO;
+import dto.EventAccountDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,41 +20,44 @@ import javax.sql.DataSource;
  *
  * @author Admin
  */
-public class EventCategoryDAO {
-    public List<EventCategoryDTO> getListEventCategory() {
-        List<EventCategoryDTO> listEventCategory = new ArrayList<>();
+public class EventAccountDAO {
+    public List<EventAccountDTO> getListEventAccount() {
+        List<EventAccountDTO> listEventAccount = new ArrayList<>();
         int id = 0;
-        String name = null;
+        int eventId = 0;
+        int accountId = 0;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "SELECT * FROM SWP391.Event_Category;";
+            String sql = "SELECT * FROM SWP391.Events_has_Account;";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("idEvent_Category");
-                name = rs.getString("name");
-                EventCategoryDTO dto = new EventCategoryDTO(id, name);
-                listEventCategory.add(dto);
+                id = rs.getInt("id");
+                eventId = rs.getInt("Events_id");
+                accountId = rs.getInt("Account_id");               
+                EventAccountDTO dto = new EventAccountDTO(id, eventId, accountId);
+                listEventAccount.add(dto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listEventCategory;
+        return listEventAccount;
     }
 
-    public boolean createtEventCategory(EventCategoryDTO eventCategory) {
+    public boolean createtEventAccount(EventAccountDTO eventAccount) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "INSERT INTO SWP391.Event_Category (`name`) VALUES (?);";
+            String sql = "INSERT INTO `SWP391`.`Events_has_Account` (`Events_id`, `Account_id`) VALUES (?, ?);";
             PreparedStatement pr = con.prepareStatement(sql);
-            pr.setString(1, eventCategory.getNsme());
+            pr.setInt(1, eventAccount.getEventId());
+            pr.setInt(2, eventAccount.getAccountId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,17 +65,18 @@ public class EventCategoryDAO {
         return check;
     }
 
-    public boolean updateEventCategory(EventCategoryDTO eventCategory) {
+    public boolean updateEventAccount(EventAccountDTO eventAccount) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "UPDATE SWP391.Event_Category SET `name` = ? WHERE (`idEvent_Category` = ?);";
+            String sql = "UPDATE `SWP391`.`Events_has_Account` SET `Events_id` = ?, `Account_id` = ? WHERE (`id` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
-            pr.setString(1, eventCategory.getNsme());
-            pr.setInt(2, eventCategory.getId());
+            pr.setInt(1, eventAccount.getEventId());
+            pr.setInt(2, eventAccount.getAccountId());
+            pr.setInt(3, eventAccount.getId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,14 +84,14 @@ public class EventCategoryDAO {
         return check;
     }
 
-    public boolean deleteEventCategory(int id) {
+    public boolean deleteEventAccount(int id) {
         boolean check = false;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "DELETE FROM SWP391.Event_Category WHERE (`idEvent_Category` = ?);";
+            String sql = "DELETE FROM `SWP391`.`Events_has_Account` WHERE (`id` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setInt(1, id);
             check = pr.executeUpdate() > 0;
