@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.RecruitmentDAO;
-import dto.RecruitmentDTO;
+import dao.SubjectDAO;
+import dto.SubjectDTO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,13 +34,13 @@ public class testController extends HttpServlet {
 //            LocalDateTime myDateObj = LocalDateTime.now();
 //            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            String formattedDate = myDateObj.format(myFormatObj);   
-            RecruitmentDAO dao = new RecruitmentDAO();
-            RecruitmentDTO dto = new RecruitmentDTO(5, "2022-07-07", "2022-08-08", 2999, "Test again and again", 5);
-            boolean check = dao.updateRecruitment(dto);
+            SubjectDAO dao = new SubjectDAO();
+            SubjectDTO dto = new SubjectDTO(1, "Link", "Name", 2);
+            boolean check = dao.deleteSubject(1);
             session.setAttribute("id", check);
-//            RecruitmentDTO dto2 = dao.getListRecruitment().get(dao.getListRecruitment().size()-1);
-//            session.setAttribute("id", dto2.getDescription());
-//            
+//            SubjectDTO dto2 = dao.getListSubject().get(dao.getListSubject().size()-1);
+//            session.setAttribute("id", dto2.getName());
+            
             url = "test.jsp";
 
         } catch (Exception e) {
