@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.SubjectDAO;
-import dto.SubjectDTO;
+import dao.EventsDAO;
+import dto.EventDTO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,11 +34,11 @@ public class testController extends HttpServlet {
 //            LocalDateTime myDateObj = LocalDateTime.now();
 //            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            String formattedDate = myDateObj.format(myFormatObj);   
-            SubjectDAO dao = new SubjectDAO();
-            SubjectDTO dto = new SubjectDTO(1, "Link", "Name", 2);
-            boolean check = dao.deleteSubject(1);
+            EventsDAO dao = new EventsDAO();
+            EventDTO dto = new EventDTO(15, "Update ne", "2022-01-01 00:00:00", "2022-01-01 00:00:00", true, "Update nè", "FPT", "Online", "2022-01-01 00:00:00");
+            boolean check = dao.createtEvent(dto);
             session.setAttribute("id", check);
-//            SubjectDTO dto2 = dao.getListSubject().get(dao.getListSubject().size()-1);
+//            EventDTO dto2 = dao.getListEvent().get(dao.getListEvent().size()-1);
 //            session.setAttribute("id", dto2.getName());
             
             url = "test.jsp";

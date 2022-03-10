@@ -69,7 +69,7 @@ public class RecruitmentDAO {
             java.util.Date parsed1 = format.parse(recruitment.getEndDate());
             java.sql.Date sqlDate1 = new java.sql.Date(parsed1.getTime());
             java.util.Date parsed2 = format.parse(recruitment.getStartDate());
-            java.sql.Date sqlDate2 = new java.sql.Date(parsed1.getTime());
+            java.sql.Date sqlDate2 = new java.sql.Date(parsed2.getTime());
             
             pr.setDate(1, sqlDate2);
             pr.setDate(2, sqlDate1);
