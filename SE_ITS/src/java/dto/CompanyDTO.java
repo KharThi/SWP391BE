@@ -13,14 +13,16 @@ public class CompanyDTO {
     int id;
     String name;
     String address;
+    String image;
 
     public CompanyDTO() {
     }
 
-    public CompanyDTO(int id, String name, String address) {
+    public CompanyDTO(int id, String name, String address, String image) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.image = image;
     }
 
     public int getId() {
@@ -46,6 +48,15 @@ public class CompanyDTO {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     
     
 }

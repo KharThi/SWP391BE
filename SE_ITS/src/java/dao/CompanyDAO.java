@@ -29,6 +29,7 @@ public class CompanyDAO {
         int id = 0;
         String name = null;
         String address = null;
+        String image = null;
         try {
             Context ctx = new InitialContext();
             Context envCtx = (Context) ctx.lookup("java:comp/env");
@@ -41,7 +42,8 @@ public class CompanyDAO {
                 id = rs.getInt("idCompany");
                 name = rs.getString("name");
                 address = rs.getString("address");
-                CompanyDTO dto = new CompanyDTO(id, name, address);
+                image = rs.getString("image");
+                CompanyDTO dto = new CompanyDTO(id, name, address, image);
                 listCompany.add(dto);
             }
         } catch (Exception e) {
@@ -57,10 +59,11 @@ public class CompanyDAO {
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "INSERT INTO SWP391.Company (`name`, `address`) VALUES (?, ?);";
+            String sql = "INSERT INTO SWP391.Company (`name`, `address`, `image`) VALUES (?, ?, ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setString(1, company.getName());
             pr.setString(2, company.getAddress());
+            pr.setString(3, company.getImage());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,11 +78,12 @@ public class CompanyDAO {
             Context envCtx = (Context) ctx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("DBCon");
             Connection con = ds.getConnection();
-            String sql = "UPDATE SWP391.Company SET `name` = ?, `address` = ? WHERE (`idCompany` = ?);";
+            String sql = "UPDATE `SWP391`.`Company` SET `name` = ?, `address` = ?, `image` = ? WHERE (`idCompany` = ?);";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setString(1, company.getName());
             pr.setString(2, company.getAddress());
-            pr.setInt(3, company.getId());
+            pr.setString(3, company.getImage());
+            pr.setInt(4, company.getId());
             check = pr.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
