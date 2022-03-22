@@ -5,6 +5,7 @@
  */
 package dao;
 
+import dto.EventDTO;
 import dto.NewsDTO;
 import java.sql.Connection;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -24,8 +26,9 @@ import javax.sql.DataSource;
  */
 public class NewsDAO {
 
-    public List<NewsDTO> getListNews() {
+    public List<NewsDTO> getListNews(int page) {
         List<NewsDTO> listNews = new ArrayList<>();
+        List<NewsDTO> result = new ArrayList<>();
         int id = 0;
         String name = null;
         boolean status = false;
@@ -56,10 +59,52 @@ public class NewsDAO {
                 NewsDTO dto = new NewsDTO(id, name, status, createTime, content, author, view);
                 listNews.add(dto);
             }
+            result = pagedResponse(listNews, page);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listNews;
+        return result;
+    }
+
+    public List<NewsDTO> search(int page, String search) {
+        List<NewsDTO> listNews = new ArrayList<>();
+        List<NewsDTO> result = new ArrayList<>();
+        int id = 0;
+        String name = null;
+        boolean status = false;
+        String createTime = null;
+        String content = null;
+        String author = null;
+        int view = 0;
+        try {
+            Context ctx = new InitialContext();
+            Context envCtx = (Context) ctx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("DBCon");
+            Connection con = ds.getConnection();
+            String sql = "SELECT * FROM SWP391.News WHERE name LIKE ?;";
+            PreparedStatement pr = con.prepareStatement(sql);
+            pr.setString(1, "%" + search + "%");
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+                name = rs.getString("name");
+                if (rs.getInt("status") == 0) {
+                    status = false;
+                } else {
+                    status = true;
+                }
+                createTime = rs.getDate("create_time").toString();
+                content = rs.getString("content");
+                author = rs.getString("author");
+                view = rs.getInt("view");
+                NewsDTO dto = new NewsDTO(id, name, status, createTime, content, author, view);
+                listNews.add(dto);
+            }
+            result = pagedResponse(listNews, page);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public boolean createtNews(NewsDTO news) {
@@ -172,5 +217,19 @@ public class NewsDAO {
             e.printStackTrace();
         }
         return check;
+    }
+
+    public List<NewsDTO> pagedResponse(List<NewsDTO> allItems, int page) {
+        int totalItems = allItems.size();
+        int fromIndex = (page - 1) * 10;
+        int toIndex = fromIndex + 10;
+        if (fromIndex <= totalItems) {
+            if (toIndex > totalItems) {
+                toIndex = totalItems;
+            }
+            return allItems.subList(fromIndex, toIndex);
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

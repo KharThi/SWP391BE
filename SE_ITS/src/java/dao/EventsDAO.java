@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.naming.Context;
@@ -24,8 +25,9 @@ import javax.sql.DataSource;
  */
 public class EventsDAO {
 
-    public List<EventDTO> getListEvent() {
+    public List<EventDTO> getListEvent(int page) {
         List<EventDTO> listEvent = new ArrayList<>();
+        List<EventDTO> result = new ArrayList<>();
         int id = 0;//
         String name;//
         String startDate;
@@ -60,10 +62,57 @@ public class EventsDAO {
                 EventDTO dto = new EventDTO(id, name, startDate, endDate, status, description, owner, type, createDate);
                 listEvent.add(dto);
             }
+            result = pagedResponse(listEvent, page);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listEvent;
+        return result;
+    }
+
+    public List<EventDTO> search(int page, String search) {
+        List<EventDTO> listEvent = new ArrayList<>();
+        List<EventDTO> result = new ArrayList<>();
+        int id = 0;//
+        String name;//
+        String startDate;
+        String endDate;
+        boolean status;//
+        String description;
+        String owner;
+        String type;
+        String createDate;
+        try {
+            Context ctx = new InitialContext();
+            Context envCtx = (Context) ctx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("DBCon");
+            Connection con = ds.getConnection();
+            String sql = "SELECT * FROM SWP391.Events WHERE SWP391.Events.name LIKE ? ;";
+            PreparedStatement pr = con.prepareStatement(sql);
+            pr.setString(1, '%' + search.trim() + '%');
+            System.out.println(pr.toString());
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+                name = rs.getString("name");
+                if (rs.getInt("status") == 0) {
+                    status = false;
+                } else {
+                    status = true;
+                }
+                startDate = rs.getString("startDate");
+                endDate = rs.getString("endDate");
+                description = rs.getString("description");
+                owner = rs.getString("owner");
+                type = rs.getString("type");
+                createDate = rs.getString("createDate");
+                EventDTO dto = new EventDTO(id, name, startDate, endDate, status, description, owner, type, createDate);
+                listEvent.add(dto);
+            }
+            result = pagedResponse(listEvent, page);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public boolean createtEvent(EventDTO events) {
@@ -161,7 +210,7 @@ public class EventsDAO {
         }
         return check;
     }
-    
+
     public List<EventDTO> getList3NewEvent() {
         List<EventDTO> listEvent = new ArrayList<>();
         int id = 0;//
@@ -202,6 +251,20 @@ public class EventsDAO {
             e.printStackTrace();
         }
         return listEvent;
+    }
+
+    public List<EventDTO> pagedResponse(List<EventDTO> allItems, int page) {
+        int totalItems = allItems.size();
+        int fromIndex = (page - 1) * 10;
+        int toIndex = fromIndex + 10;
+        if (fromIndex <= totalItems) {
+            if (toIndex > totalItems) {
+                toIndex = totalItems;
+            }
+            return allItems.subList(fromIndex, toIndex);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
 }

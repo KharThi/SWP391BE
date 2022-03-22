@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.CompanyDAO;
-import dto.CompanyDTO;
+import dao.RecruitmentDAO;
+import dto.RecruitmentDTO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,17 +29,19 @@ public class testController extends HttpServlet {
         try {
 
             HttpSession session = request.getSession();
-//            NewsDAO dao = new NewsDAO();
-//            NewsDTO dto = new NewsDTO(4, "Test1", true, "2022-01-01", "test", "test", 0);
+//            RecruitmentDAO dao = new RecruitmentDAO();
+//            RecruitmentDTO dto = new RecruitmentDTO(4, "Test1", true, "2022-01-01", "test", "test", 0);
 //            LocalDateTime myDateObj = LocalDateTime.now();
 //            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            String formattedDate = myDateObj.format(myFormatObj);   
-            CompanyDAO dao = new CompanyDAO();
-            CompanyDTO dto = new CompanyDTO(6, "update", "update", "update");
-            boolean check = dao.deleteCompany(dto.getId());
-            session.setAttribute("id", check);
-//            CompanyDTO dto2 = dao.getListCompany().get(dao.getListCompany().size()-1);
-//            session.setAttribute("id", dto2.getImage());
+            RecruitmentDAO dao = new RecruitmentDAO();
+            RecruitmentDTO dto = new RecruitmentDTO(6, "2022-03-22", "2022-03-22", 10, "Test", 7, "Test");
+//            boolean check = dao.deleteRecruitment(6);
+//            session.setAttribute("id", check);
+//            RecruitmentDTO dto2 = dao.search(1,"t").get(dao.search(1,"t").size()-1);
+//            session.setAttribute("id", dto2.getDescription());
+            RecruitmentDTO dto2 = dao.search(1,"b").get(0);
+            session.setAttribute("id", dto2.getDescription());
             
             url = "test.jsp";
 

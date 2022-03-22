@@ -18,7 +18,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-/**?
+/**
  *
  * @author Admin
  */
@@ -51,7 +51,7 @@ public class CompanyDAO {
         }
         return listCompany;
     }
-
+    
     public boolean createtCompany(CompanyDTO company) {
         boolean check = false;
         try {

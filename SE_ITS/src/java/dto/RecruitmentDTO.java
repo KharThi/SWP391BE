@@ -18,17 +18,19 @@ public class RecruitmentDTO {
     float salary;
     String description;
     int companyId;
+    String name;
 
     public RecruitmentDTO() {
     }
 
-    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId) {
+    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId,String name) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.salary = salary;
         this.description = description;
         this.companyId = companyId;
+        this.name = name;
     }
 
     public int getId() {
@@ -78,5 +80,14 @@ public class RecruitmentDTO {
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     
 }
