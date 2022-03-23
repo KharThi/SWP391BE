@@ -92,7 +92,7 @@ public class StudentApplicationDAO {
             pr.setString(1, studentApplication.getName());
             pr.setString(2, studentApplication.getPhone());
             pr.setInt(3, tmp);
-            if(count<2){
+            if(count<6){
                 check = pr.executeUpdate() > 0;
             }      
         } catch (Exception e) {
