@@ -5,20 +5,19 @@
             <url>src/java/dao/EventsDAO.java</url>
             <bookmark id="1">
                 <name/>
-                <line>81</line>
+                <line>130</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dto/CompanyDTO.java</file>
-            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/web/META-INF/context.xml</file>
-            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dao/EventsDAO.java</file>
             <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dao/CompanyDAO.java</file>
-            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/web/test.jsp</file>
-            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dto/EventDTO.java</file>
+            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dao/EventsDAO.java</file>
             <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/controller/testController.java</file>
+            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dto/RecruitmentDTO.java</file>
+            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dao/RecruitmentDAO.java</file>
+            <file>file:/E:/NetBenProject/SWP391BE/SE_ITS/src/java/dao/NewsDAO.java</file>
         </group>
     </open-files>
 </project-private>

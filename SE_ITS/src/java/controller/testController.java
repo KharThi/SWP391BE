@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.RecruitmentDAO;
-import dto.RecruitmentDTO;
+import dao.StudentApplicationDAO;
+import dto.StudentApplicationDTO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,19 +29,20 @@ public class testController extends HttpServlet {
         try {
 
             HttpSession session = request.getSession();
-//            RecruitmentDAO dao = new RecruitmentDAO();
-//            RecruitmentDTO dto = new RecruitmentDTO(4, "Test1", true, "2022-01-01", "test", "test", 0);
+//            StudentApplicationDAO dao = new StudentApplicationDAO();
+//            StudentApplicationDTO dto = new StudentApplicationDTO(4, "Test1", true, "2022-01-01", "test", "test", 0);
 //            LocalDateTime myDateObj = LocalDateTime.now();
 //            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            String formattedDate = myDateObj.format(myFormatObj);   
-            RecruitmentDAO dao = new RecruitmentDAO();
-            RecruitmentDTO dto = new RecruitmentDTO(6, "2022-03-22", "2022-03-22", 10, "Test", 7, "Test");
-//            boolean check = dao.deleteRecruitment(6);
-//            session.setAttribute("id", check);
-//            RecruitmentDTO dto2 = dao.search(1,"t").get(dao.search(1,"t").size()-1);
+            StudentApplicationDAO dao = new StudentApplicationDAO();
+            StudentApplicationDTO dto = new StudentApplicationDTO(1, "Thi NE", "1231234", false);
+            boolean check = dao.deleteStudentApplication(4);
+//            int count = dao.count("123123");
+            session.setAttribute("id", check);
+//            StudentApplicationDTO dto2 = dao.search(1,"t").get(dao.search(1,"t").size()-1);
 //            session.setAttribute("id", dto2.getDescription());
-            RecruitmentDTO dto2 = dao.search(1,"b").get(0);
-            session.setAttribute("id", dto2.getDescription());
+//            StudentApplicationDTO dto2 = dao.search(1,"b").get(0);
+//            session.setAttribute("id", dto2.getDescription());
             
             url = "test.jsp";
 

@@ -19,11 +19,14 @@ public class RecruitmentDTO {
     String description;
     int companyId;
     String name;
+    boolean status;
+    String owner;
+    String createDate;
 
     public RecruitmentDTO() {
     }
 
-    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId,String name) {
+    public RecruitmentDTO(int id, String startDate, String endDate, float salary, String description, int companyId, String name, boolean status, String owner, String createDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -31,7 +34,12 @@ public class RecruitmentDTO {
         this.description = description;
         this.companyId = companyId;
         this.name = name;
+        this.status = status;
+        this.owner = owner;
+        this.createDate = createDate;
     }
+
+    
 
     public int getId() {
         return id;
@@ -88,6 +96,31 @@ public class RecruitmentDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+    
     
     
 }
